@@ -1,0 +1,4 @@
+#pragma once
+
+constexpr char WIFI_SSID[] = "@AP_NAME@";
+constexpr char WIFI_PASSWORD[] = "@AP_PASSWORD@";

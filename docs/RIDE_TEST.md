@@ -1,0 +1,23 @@
+# Ride Test
+
+Open **Admin → Settings & records → Ride Test** on the actual vest dashboard. While stationary, add optional notes and select **Start ride**. Keep this page open, in the foreground, with the phone awake and connected to the vest. It ends at20 minutes, or select **Stop ride** earlier. Wait until it says ready to download.
+
+**Download CSV files (.zip)** gives separate module CSVs plus Summary, Moments, Data quality and raw JSON. **Download Excel** gives an XLSX workbook with fitted columns, wrapped headings, filters and frozen first rows. CSV cannot store column widths; the Excel export supplies the requested formatting. All observation timestamps explicitly use Philippine time, UTC+08, based on the phone clock. GPS UTC is retained separately; elapsed recording time uses a monotonic clock while the page remains open.
+
+The integrated live-feed logger records IMU observations up to about **4 Hz** (one request every 250 ms after completion), piezo updates at the available source rate, GPS/SIM800L/INA226 and basic camera status about every2 seconds, detailed cameras every5 seconds and bounded modem trace snapshots every10 seconds. Response time can reduce these rates. Sensing acquisition and crash detection retain their nominal **200 Hz** rate. This browser preview is not the standalone logger's full200Hz raw acquisition stream. Raw counts, corrected engineering values, sample sequence/time/temperature, sensor timing/failure/gap counters, calibration, detector flags/holds/posture/candidate details and both piezo banks are retained. Module telemetry includes the values and freshness reported by the existing APIs. A new IMU candidate creates a Moment record.
+
+Failed IMU requests, including HTTP 503, back off exponentially to a maximum 15-second delay. A successful auxiliary status request does not erase the IMU failure count. Trace catch-up pages are at least one second apart; a nonadvancing cursor or eight-page catch-up limit ends that attempt and records missing history. A later snapshot can retry. Saved metadata/moments identify the preview interval; resumed older rides can contain mixed sampling intervals. No missing readings are invented.
+
+Logging is read-only and does not change crash monitoring, emergency SMS, recording protection, calibration or thresholds. Start/Stop affect only this browser's logging. Camera video is not copied; camera status and recording/SD/counter/fault telemetry are logged. Modem message bodies are not requested, and traced SMS recipient addresses are masked. No credentials, pairing keys or contacts/settings endpoints are collected.
+
+Records are committed to IndexedDB about once per second, with metadata and each batch in one transaction. Stop aborts pending requests and waits for saving before enabling export. Repeated Stop/page exits do not overwrite a completed result. Reload can recover committed data; an uncleanly interrupted active ride can be continued if its ownership is available. Hidden pages pause sampling and create visibility/gap moments; missing observations are never interpolated. Network interruptions and board changes are recorded. The most recent uncommitted buffer can be lost if the browser/phone is killed; no software can promise recovery of readings never received. Storage failures stop collection and preserve earlier committed data; the remaining in-memory portion can be exported before closing. Same-origin ownership checks prevent competing writers from silently merging sessions.
+
+Use the same phone/browser and dashboard address to recover saved rides. Changing between smartvest.local and192.168.4.1 changes browser storage origin. Do not clear browser data before downloading. Localhost previews use simulated data; their exports are marked as simulated and cannot record the physical ride.
+
+## Build and delivery
+
+Install Main with the matching generated UI assets. Keep compressed payloads within **100 KiB** and retain at least **8 KiB** below the IDE compile limit and **24 KiB** within each preserved physical application slot. Actual current payload size is recorded in `ui/manifest.json`; retained target build results are in [Verification](VERIFICATION.md). Source compilation is separate from physical upload/acceptance.
+
+## Scoped status
+
+The logger now reads `status?view=ride`. All module sections saved by the recorder remain present. Incident history, recent SMS history, HTTP/radio counters and serial-console detail were not saved by this recorder and are no longer generated for each logger status poll. Full explicit diagnostics remain available. This reduces response memory without changing saved module fields or sampling policy.

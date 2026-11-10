@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict');const {createHarness}=require('./preview_server.cjs');const {launch,login}=require('./dashboard-test-helpers.cjs');
+(async()=>{const h=createHarness(),base=await h.start(),browser=await launch();try{const p=await browser.newPage();await p.goto(base+'/admin');await login(p,'admin');const outcome=await p.evaluate(async()=>{
+ const {startPolling,stopPolling,session}=window.smartvestRuntime;stopPolling();let hidden=false,offset=0,calls=0,fail=false;const now=Date.now;Date.now=()=>now()+offset;Object.defineProperty(document,'hidden',{configurable:true,get:()=>hidden});const wait=ms=>new Promise(r=>setTimeout(r,ms));
+ const poll=startPolling('status',()=>{},{interval:200,load:async()=>{calls++;if(fail){const e=new Error('network');e.offline=true;throw e;}return {};}});await poll.refresh();
+ hidden=true;document.dispatchEvent(new Event('visibilitychange'));offset=60000;const baseline=calls;await wait(1100);const hiddenResult={calls:calls-baseline,banner:!document.getElementById('connectionBanner').hidden};
+ fail=true;hidden=false;document.dispatchEvent(new Event('visibilitychange'));await wait(500);const resumeBanner=!document.getElementById('connectionBanner').hidden;fail=false;await poll.refresh();const recovered=session.connected;
+ fail=true;offset+=30000;await poll.refresh();await wait(1100);const realLoss=!document.getElementById('connectionBanner').hidden;
+ fail=false;await poll.refresh();const final=session.connected;stopPolling();Date.now=now;delete document.hidden;return {hiddenResult,resumeBanner,recovered,realLoss,final};});
+ assert.deepEqual(outcome.hiddenResult,{calls:0,banner:false});assert.equal(outcome.resumeBanner,false);assert(outcome.recovered&&outcome.realLoss&&outcome.final);console.log('PASS hidden tabs pause requests without false connection warnings; foreground grace refreshes automatically; genuine stale loss stays visible and recovers');
+ }finally{await browser.close();await h.close();}})().catch(e=>{console.error(e);process.exitCode=1});

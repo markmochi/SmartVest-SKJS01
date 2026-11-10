@@ -1,0 +1,30 @@
+#pragma once
+#include "src/CameraPairingKeys.h"
+#include <stdint.h>
+namespace CameraConfig {
+// One sketch for both cameras. Give each camera its matching unique token.
+constexpr char ROLE[] = "front"; // Select "front" or "rear"; the matching fixed key is automatic.
+constexpr char SSID[] = "@AP_NAME@";
+constexpr char PASSWORD[] = "@AP_PASSWORD@";
+constexpr char MAIN_URL[] = "http://192.168.4.1";
+constexpr const char* TOKEN = ROLE[0]=='f' ? CameraPairing::FRONT_KEY : CameraPairing::REAR_KEY;
+// Explicitly confirm the AI Thinker camera/SD board layout before enabling.
+// OV3660 is supported by the driver; sensor ID is verified at startup.
+constexpr bool BOARD_LAYOUT_CONFIRMED = true;
+// Correct the OV3660's vertically inverted default for both installed cameras.
+constexpr bool VERTICAL_FLIP = true;
+constexpr uint32_t SEGMENT_MS = 60000, PRE_MS = 300000, POST_MS = 300000;
+constexpr unsigned NORMAL_CLIPS = 30, MAX_EVENTS = 4;
+constexpr int NAME_UTC_OFFSET_MINUTES=480; // Philippine local time; file metadata also stores UTC
+constexpr unsigned FPS = 8; // VGA JPEG target; measured rate is written into AVI.
+static_assert((uint64_t(SEGMENT_MS)*FPS+999)/1000 < 1024, "AVI RAM index must fit each segment");
+constexpr uint32_t WIFI_JOIN_TIMEOUT_MS=30000, WIFI_RETRY_INITIAL_MS=2000, WIFI_RETRY_MAX_MS=30000;
+constexpr uint32_t HTTP_CONNECT_TIMEOUT_MS=2000, HTTP_READ_TIMEOUT_MS=3000;
+constexpr uint32_t HEARTBEAT_RETRY_MS=1000, DIAGNOSTIC_MS=30000;
+constexpr unsigned POLL_MS = 1000, HEARTBEAT_MS = 5000;
+constexpr uint64_t FREE_RESERVE_BYTES = 64ULL * 1024 * 1024;
+constexpr uint64_t MAX_AVI_BYTES = 128ULL * 1024 * 1024;
+constexpr uint32_t MAX_FRAME_GAP_MS = 2000;
+constexpr uint32_t LINK_MARGIN_MS = 2000; // minimum; measured HTTP RTT can widen it
+constexpr char FIRMWARE[] = "SJKS-camera-1.0.6";
+}

@@ -1,0 +1,8 @@
+#pragma once
+// Private keys provisioned ONCE for this project. Preserve this file across
+// firmware releases. Main and both cameras use identical copies.
+namespace CameraPairing {
+constexpr char FRONT_KEY[] = "@FRONT_KEY@";
+constexpr char REAR_KEY[] = "@REAR_KEY@";
+static_assert(sizeof(FRONT_KEY)==65&&sizeof(REAR_KEY)==65,"Camera keys must be 64 hex characters");
+}

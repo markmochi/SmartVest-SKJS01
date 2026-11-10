@@ -1,0 +1,20 @@
+__pycache__/
+node_modules/
+*.pyc
+*.exe
+*.pdb
+build/
+builds/
+.zig-cache/
+zig-out/
+testing/results/
+
+# Local deployment credentials and camera pairing keys
+Main_and_Cameras/SmartVest_SJKS01_Main/Config.h
+Main_and_Cameras/SmartVest_SJKS01_Camera/CameraConfig.h
+common/CameraPairingKeys.h
+**/CameraPairingKeys.h
+
+# Generated setup credentials
+smartvest-credentials.txt
+IMU Lab Test/SmartVest_IMU_Finalization_Direction_Fixed/LabWiFi.h

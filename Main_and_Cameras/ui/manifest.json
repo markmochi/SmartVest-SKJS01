@@ -1,0 +1,594 @@
+{
+  "version": "1.0-8bfdbb1e1b",
+  "productVersion": "1.0",
+  "minifier": {
+    "name": "terser",
+    "version": "5.48.0",
+    "settings": {
+      "compress": {
+        "passes": 2,
+        "unsafe": false
+      },
+      "mangle": {
+        "properties": false
+      },
+      "module": true,
+      "format": {
+        "comments": false
+      }
+    }
+  },
+  "bundler": {
+    "name": "esbuild",
+    "version": "0.28.2"
+  },
+  "contentSecurityPolicy": "default-src 'self'; script-src 'self' 'sha256-7YRHWwxtuMzneiiacTSV/6pWRQ8bC2p0Tej7KpnJW6Y='; style-src 'self' 'sha256-FUYPoSx0bSro0nnFSw8xgLJpfzMBgds0A77klqW9sYs='; img-src 'self' data:; connect-src 'self'; frame-src http://*:8081; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
+  "gzip": {
+    "name": "zopfli",
+    "version": "0.2.3.post1",
+    "iterations": 100
+  },
+  "storedGzipBytes": 94061,
+  "assets": [
+    {
+      "path": "/",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/rider-overview.html",
+      "inputSource": "ui/pages/rider-overview.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/equipment",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/rider-equipment.html",
+      "inputSource": "ui/pages/rider-equipment.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/cameras",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/rider-cameras.html",
+      "inputSource": "ui/pages/rider-cameras.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/contacts",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/rider-contacts.html",
+      "inputSource": "ui/pages/rider-contacts.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/activity",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/rider-activity.html",
+      "inputSource": "ui/pages/rider-activity.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/account",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/rider-account.html",
+      "inputSource": "ui/pages/rider-account.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-overview.html",
+      "inputSource": "ui/pages/developer-overview.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin/gsm",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-gsm.html",
+      "inputSource": "ui/pages/developer-gsm.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin/gps",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-gps.html",
+      "inputSource": "ui/pages/developer-gps.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin/sensing",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-sensing.html",
+      "inputSource": "ui/pages/developer-sensing.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin/power",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-power.html",
+      "inputSource": "ui/pages/developer-power.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin/cameras",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-cameras.html",
+      "inputSource": "ui/pages/developer-cameras.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin/network",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-network.html",
+      "inputSource": "ui/pages/developer-network.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin/ride-test",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-ride-test.html",
+      "inputSource": "ui/pages/developer-ride-test.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin/system",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-system.html",
+      "inputSource": "ui/pages/developer-system.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin/contacts",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-contacts.html",
+      "inputSource": "ui/pages/developer-contacts.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin/activity",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-activity.html",
+      "inputSource": "ui/pages/developer-activity.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin/incidents",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-incidents.html",
+      "inputSource": "ui/pages/developer-incidents.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin/tools",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-tools.html",
+      "inputSource": "ui/pages/developer-tools.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/admin/account",
+      "sourceBytes": 74971,
+      "gzipBytes": 16019,
+      "payload": 0,
+      "sha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926",
+      "servedSource": "ui/pages/developer-account.html",
+      "inputSource": "ui/pages/developer-account.html",
+      "inputSha256": "43c0f4242ffe1d8234a7655978d8d2e24c267ec645c5ea200b9364393cd31926"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/developer/app.js",
+      "sourceBytes": 27,
+      "gzipBytes": 47,
+      "payload": 20,
+      "sha256": "378e476f99e4a56f4857101e5134ff3c960da1d3c5f6f943d0b08f5df3c56aae",
+      "servedSource": "ui-built/developer/app.js",
+      "inputSource": "ui/developer/app.js",
+      "inputSha256": "16ad98235ab20c62b38901a97f40a07fd6c045d249d616c419d8153f52177a5f"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/developer/cameras.js",
+      "sourceBytes": 27,
+      "gzipBytes": 47,
+      "payload": 20,
+      "sha256": "378e476f99e4a56f4857101e5134ff3c960da1d3c5f6f943d0b08f5df3c56aae",
+      "servedSource": "ui-built/developer/cameras.js",
+      "inputSource": "ui/developer/cameras.js",
+      "inputSha256": "3a42b76a923b449517d6bd1c82c3d03f02723f148373d8862c88474adc42698f"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/developer/console.js",
+      "sourceBytes": 67780,
+      "gzipBytes": 22388,
+      "payload": 22,
+      "sha256": "9b48fc3e9a6f7d4a1f75099c12da4438daf0e7c24f07fcb27ad0d18ac0932c7b",
+      "servedSource": "ui-built/developer/console.js",
+      "inputSource": "ui/developer/console.js",
+      "inputSha256": "70331ae0f6e90ca78583b2f28ef988a50917323795a0b3d7963f711ae6168fab"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/developer/imu-data.js",
+      "sourceBytes": 27,
+      "gzipBytes": 47,
+      "payload": 23,
+      "sha256": "af0af7e2fc93242bdb878e443c23eb6b7a4508472b550181e5e1f457d1522172",
+      "servedSource": "ui-built/developer/imu-data.js",
+      "inputSource": "ui/developer/imu-data.js",
+      "inputSha256": "a2f6f73c33582b09dd4cd2360fb6175b7be959ef26a14ffc01d5b6d230a35ec1"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/developer/modules.js",
+      "sourceBytes": 27,
+      "gzipBytes": 47,
+      "payload": 20,
+      "sha256": "378e476f99e4a56f4857101e5134ff3c960da1d3c5f6f943d0b08f5df3c56aae",
+      "servedSource": "ui-built/developer/modules.js",
+      "inputSource": "ui/developer/modules.js",
+      "inputSha256": "800c549775a6bf4cf6a687fd223fef5b627b10ecb5f7856e230d81058a2fe3c5"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/developer/piezo.js",
+      "sourceBytes": 27,
+      "gzipBytes": 47,
+      "payload": 23,
+      "sha256": "af0af7e2fc93242bdb878e443c23eb6b7a4508472b550181e5e1f457d1522172",
+      "servedSource": "ui-built/developer/piezo.js",
+      "inputSource": "ui/developer/piezo.js",
+      "inputSha256": "93a970f49b0de4f3352825df74c093b79967a68ba84bff7eb0a3b7a298f44207"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/developer/ride-data.js",
+      "sourceBytes": 27,
+      "gzipBytes": 47,
+      "payload": 20,
+      "sha256": "378e476f99e4a56f4857101e5134ff3c960da1d3c5f6f943d0b08f5df3c56aae",
+      "servedSource": "ui-built/developer/ride-data.js",
+      "inputSource": "ui/developer/ride-data.js",
+      "inputSha256": "459e6c59b9aff9bcb593178e291aff40c044bccae62bdce884213b5116612662"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/developer/ride-export.js",
+      "sourceBytes": 27,
+      "gzipBytes": 47,
+      "payload": 20,
+      "sha256": "378e476f99e4a56f4857101e5134ff3c960da1d3c5f6f943d0b08f5df3c56aae",
+      "servedSource": "ui-built/developer/ride-export.js",
+      "inputSource": "ui/developer/ride-export.js",
+      "inputSha256": "90c3f76a833b686fc9d675fec15139ed2ed2758bfbca2662b3a030117f1421ee"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/developer/ride-test.js",
+      "sourceBytes": 27,
+      "gzipBytes": 47,
+      "payload": 20,
+      "sha256": "378e476f99e4a56f4857101e5134ff3c960da1d3c5f6f943d0b08f5df3c56aae",
+      "servedSource": "ui-built/developer/ride-test.js",
+      "inputSource": "ui/developer/ride-test.js",
+      "inputSha256": "f628bcaffd11e45ac722efa3f079bb4c00fa88d28e8fc2aa81fe41b5215de2b5"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/developer/sensing.js",
+      "sourceBytes": 27,
+      "gzipBytes": 47,
+      "payload": 23,
+      "sha256": "af0af7e2fc93242bdb878e443c23eb6b7a4508472b550181e5e1f457d1522172",
+      "servedSource": "ui-built/developer/sensing.js",
+      "inputSource": "ui/developer/sensing.js",
+      "inputSha256": "a033b29a68248445c70b631c6bf1bcd38d1c6fa44cb05d001ffb32902e7f194d"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/developer/sensors.js",
+      "sourceBytes": 29465,
+      "gzipBytes": 10559,
+      "payload": 30,
+      "sha256": "63e17f3ab4747f1fe58453465418b80c41fc3cffe0cb34201103d8af56eaa8b8",
+      "servedSource": "ui-built/developer/sensors.js",
+      "inputSource": "ui/developer/sensors.js",
+      "inputSha256": "383463ad13bc6408b742a80347b1bf36958a96a53f0c8bb3344c2a9d97901055"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/developer/tools.js",
+      "sourceBytes": 27,
+      "gzipBytes": 47,
+      "payload": 20,
+      "sha256": "378e476f99e4a56f4857101e5134ff3c960da1d3c5f6f943d0b08f5df3c56aae",
+      "servedSource": "ui-built/developer/tools.js",
+      "inputSource": "ui/developer/tools.js",
+      "inputSha256": "9d428bdab82ba57776cf3cabf03978151e546fb8567f7e25bceb704b0f654233"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/rider/app.js",
+      "sourceBytes": 36,
+      "gzipBytes": 56,
+      "payload": 32,
+      "sha256": "273641c067d940ccfb7893e8dd1e7d423388f0e096709e6a30e0f17696e9ac90",
+      "servedSource": "ui-built/rider/app.js",
+      "inputSource": "ui/rider/app.js",
+      "inputSha256": "7d8e85ef70a6faa5b352fdd46a2a3c89247ea8198775d2895b0ed92518e126fe"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/rider/battery.js",
+      "sourceBytes": 36,
+      "gzipBytes": 56,
+      "payload": 32,
+      "sha256": "273641c067d940ccfb7893e8dd1e7d423388f0e096709e6a30e0f17696e9ac90",
+      "servedSource": "ui-built/rider/battery.js",
+      "inputSource": "ui/rider/battery.js",
+      "inputSha256": "1bbb0221063d291701848d251036b0a1447f63ff3bd4d3555a891b3424716f40"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/account.js",
+      "sourceBytes": 25,
+      "gzipBytes": 45,
+      "payload": 34,
+      "sha256": "2ccd83d7e714bd406bfd2bfd74beef4a353021de4b2380cbc4e0930e996f507f",
+      "servedSource": "ui-built/shared/account.js",
+      "inputSource": "ui/shared/account.js",
+      "inputSha256": "c4e9674a82be9b1bc9e055cdf16bcb2b9dca17df5b25e6a43530c804a25c0c9e"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/api.js",
+      "sourceBytes": 31,
+      "gzipBytes": 51,
+      "payload": 35,
+      "sha256": "d3d69ea81dfec19c7f1bb24dd90fdf3bd306e3b2dc8a5f1dd71db92b3a089742",
+      "servedSource": "ui-built/shared/api.js",
+      "inputSource": "ui/shared/api.js",
+      "inputSha256": "327e5d5fd777504f73050ba1b40d9863190004bd66d96b4600451fd2c6ee0035"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/boot.js",
+      "sourceBytes": 5908,
+      "gzipBytes": 2303,
+      "payload": 36,
+      "sha256": "dd64ce8e4c60cdec468a043729f0ddc6ef7b42dbc32adf1e1bb569a7b55cd45e",
+      "servedSource": "ui-built/shared/boot.js",
+      "inputSource": "ui/shared/boot.js",
+      "inputSha256": "f6eff303c0edfe78e5655276c3e245b8d5e6ef4e1fff30225d2feae235ec8e26"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/camera-files.js",
+      "sourceBytes": 11682,
+      "gzipBytes": 4574,
+      "payload": 37,
+      "sha256": "83ad1ff434fa4053fdc841ba99d41f0da9d2c8843e3d8029ba24e21d2e805c2d",
+      "servedSource": "ui-built/shared/camera-files.js",
+      "inputSource": "ui/shared/camera-files.js",
+      "inputSha256": "392fa2b699f3184213cb1ebbf1e8789872c0d13acfbf5e62ec391577f77ececc"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/contacts.js",
+      "sourceBytes": 25,
+      "gzipBytes": 45,
+      "payload": 34,
+      "sha256": "2ccd83d7e714bd406bfd2bfd74beef4a353021de4b2380cbc4e0930e996f507f",
+      "servedSource": "ui-built/shared/contacts.js",
+      "inputSource": "ui/shared/contacts.js",
+      "inputSha256": "e006e15e98ed20078d2662d918ed86302d0160f234c37c1bf072f5643073198e"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/diagnostics.js",
+      "sourceBytes": 31,
+      "gzipBytes": 51,
+      "payload": 35,
+      "sha256": "d3d69ea81dfec19c7f1bb24dd90fdf3bd306e3b2dc8a5f1dd71db92b3a089742",
+      "servedSource": "ui-built/shared/diagnostics.js",
+      "inputSource": "ui/shared/diagnostics.js",
+      "inputSha256": "72179103adccb9a2e54326581efd6384e08d71446f1b2eb3963e3332bdf71ff6"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/dom.js",
+      "sourceBytes": 31,
+      "gzipBytes": 51,
+      "payload": 35,
+      "sha256": "d3d69ea81dfec19c7f1bb24dd90fdf3bd306e3b2dc8a5f1dd71db92b3a089742",
+      "servedSource": "ui-built/shared/dom.js",
+      "inputSource": "ui/shared/dom.js",
+      "inputSha256": "a580a32e4de954d633e2eb3768259e21c05efb724200aaf65c56e5de649271c5"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/errors.js",
+      "sourceBytes": 31,
+      "gzipBytes": 51,
+      "payload": 35,
+      "sha256": "d3d69ea81dfec19c7f1bb24dd90fdf3bd306e3b2dc8a5f1dd71db92b3a089742",
+      "servedSource": "ui-built/shared/errors.js",
+      "inputSource": "ui/shared/errors.js",
+      "inputSha256": "5f9c4a56643712485975518133d8797fab80b2ca5541195bd73bfbe0d3118be6"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/experience.js",
+      "sourceBytes": 31,
+      "gzipBytes": 51,
+      "payload": 35,
+      "sha256": "d3d69ea81dfec19c7f1bb24dd90fdf3bd306e3b2dc8a5f1dd71db92b3a089742",
+      "servedSource": "ui-built/shared/experience.js",
+      "inputSource": "ui/shared/experience.js",
+      "inputSha256": "69a065513ed0ce135241d3e8de29a2daf76cf4b7409b2076af988ff27d5cdad7"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/favicon.svg",
+      "sourceBytes": 233,
+      "gzipBytes": 188,
+      "payload": 43,
+      "sha256": "7131530bcc3547db305205c6cf7c2d4fcb73bd8c0ee311b0abf96bf28074c558",
+      "servedSource": "ui/shared/favicon.svg",
+      "inputSource": "ui/shared/favicon.svg",
+      "inputSha256": "7131530bcc3547db305205c6cf7c2d4fcb73bd8c0ee311b0abf96bf28074c558"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/history.js",
+      "sourceBytes": 25,
+      "gzipBytes": 45,
+      "payload": 34,
+      "sha256": "2ccd83d7e714bd406bfd2bfd74beef4a353021de4b2380cbc4e0930e996f507f",
+      "servedSource": "ui-built/shared/history.js",
+      "inputSource": "ui/shared/history.js",
+      "inputSha256": "9dbddd7796bfbc3648f4ec773c741a746a65cc903f67c7b3a9bb7327a7db1de7"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/icons.js",
+      "sourceBytes": 31,
+      "gzipBytes": 51,
+      "payload": 35,
+      "sha256": "d3d69ea81dfec19c7f1bb24dd90fdf3bd306e3b2dc8a5f1dd71db92b3a089742",
+      "servedSource": "ui-built/shared/icons.js",
+      "inputSource": "ui/shared/icons.js",
+      "inputSha256": "8f98628a85a4adb84db64ed974aaf5a82c8042e09d881ec49909f82a5e28b991"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/incidents.js",
+      "sourceBytes": 25,
+      "gzipBytes": 45,
+      "payload": 34,
+      "sha256": "2ccd83d7e714bd406bfd2bfd74beef4a353021de4b2380cbc4e0930e996f507f",
+      "servedSource": "ui-built/shared/incidents.js",
+      "inputSource": "ui/shared/incidents.js",
+      "inputSha256": "5f387aba8f64b826024daad43a853631aa212d49f909b3e0750374085fa9dda4"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/message-queue.js",
+      "sourceBytes": 25,
+      "gzipBytes": 45,
+      "payload": 34,
+      "sha256": "2ccd83d7e714bd406bfd2bfd74beef4a353021de4b2380cbc4e0930e996f507f",
+      "servedSource": "ui-built/shared/message-queue.js",
+      "inputSource": "ui/shared/message-queue.js",
+      "inputSha256": "bddb67ba9134e91e0914ddc3c9c023886c2b1c8fcbe2ba1bb8a8c538eab8a86f"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/onboarding.js",
+      "sourceBytes": 25,
+      "gzipBytes": 45,
+      "payload": 34,
+      "sha256": "2ccd83d7e714bd406bfd2bfd74beef4a353021de4b2380cbc4e0930e996f507f",
+      "servedSource": "ui-built/shared/onboarding.js",
+      "inputSource": "ui/shared/onboarding.js",
+      "inputSha256": "d48ba6f22bb756fd9e6fa3c8773ce7b3f121745691aef32fdc6b3e635e88a7d7"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/poller.js",
+      "sourceBytes": 31,
+      "gzipBytes": 51,
+      "payload": 35,
+      "sha256": "d3d69ea81dfec19c7f1bb24dd90fdf3bd306e3b2dc8a5f1dd71db92b3a089742",
+      "servedSource": "ui-built/shared/poller.js",
+      "inputSource": "ui/shared/poller.js",
+      "inputSha256": "c9a31dc40aaaad579a8ae39c084eaadc2dd14b86fbd09dc30c7ecec487cf9ce0"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/position.js",
+      "sourceBytes": 47314,
+      "gzipBytes": 16860,
+      "payload": 50,
+      "sha256": "d8669d604af07489abe2af086144953b922b4ca733cbbb24163cecbb7b1794a8",
+      "servedSource": "ui-built/shared/position.js",
+      "inputSource": "ui/shared/position.js",
+      "inputSha256": "b584262b73a0f8aa8abbeae64ea007c001bd0f8416ff81112b339d7022f27fa8"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/rider-position.js",
+      "sourceBytes": 28,
+      "gzipBytes": 48,
+      "payload": 51,
+      "sha256": "f51508427a8cd6454ade0159a55f80f53f1736e511e51521181ad0d0b2673754",
+      "servedSource": "ui-built/shared/rider-position.js",
+      "inputSource": "ui/shared/rider-position.js",
+      "inputSha256": "11a8e76c1abc7fbf62c15f6f8f038d11787c016ce23ff4e74cf125e7054ec71f"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/rider-scene.js",
+      "sourceBytes": 28,
+      "gzipBytes": 48,
+      "payload": 51,
+      "sha256": "f51508427a8cd6454ade0159a55f80f53f1736e511e51521181ad0d0b2673754",
+      "servedSource": "ui-built/shared/rider-scene.js",
+      "inputSource": "ui/shared/rider-scene.js",
+      "inputSha256": "9b20736e58f2027601f7d9bb9c21c0309d98421e919d99f95a3f6b37f94875dc"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/runtime-ref.js",
+      "sourceBytes": 1078,
+      "gzipBytes": 535,
+      "payload": 53,
+      "sha256": "d845a5d02a5a243eba0b0b041e84c588f9412c2c4637b5630b19b16604019df6",
+      "servedSource": "ui-built/shared/runtime-ref.js",
+      "inputSource": "ui/shared/runtime-ref.js",
+      "inputSha256": "a57a850636c5fcc79132ddc68bb9eba091ff616c6cf14018507c15e979956588"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/runtime.js",
+      "sourceBytes": 27814,
+      "gzipBytes": 10328,
+      "payload": 54,
+      "sha256": "d324a6bb475c547796f801d0ef7b55328b8f19413bace4aff81b8f5a506e66fb",
+      "servedSource": "ui-built/shared/runtime.js",
+      "inputSource": "ui/shared/runtime.js",
+      "inputSha256": "ec8b34888d18d44eb205b33929c232059b4f2f0e55fa5d3741d7b46eeff4ef0a"
+    },
+    {
+      "path": "/assets/1.0-8bfdbb1e1b/shared/views.js",
+      "sourceBytes": 31707,
+      "gzipBytes": 10013,
+      "payload": 55,
+      "sha256": "fccb44a8ad5636b429b6f3a4e04dd9c1852562a16dcabce7ce36b36e13ddf5df",
+      "servedSource": "ui-built/shared/views.js",
+      "inputSource": "ui/shared/views.js",
+      "inputSha256": "c23c09db5d563e11c082463418456a277e8fa866e4e7c90731ef7f847a02511d"
+    }
+  ]
+}

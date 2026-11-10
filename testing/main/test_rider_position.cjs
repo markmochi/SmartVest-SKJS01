@@ -1,0 +1,97 @@
+// Browser fixtures only: no physical vest, camera commands or SMS are contacted.
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const {createHarness}=require('./preview_server.cjs'),{prepare}=require('./dashboard-test-helpers.cjs');
+const pw=require(process.env.SJKS_PLAYWRIGHT);
+(async()=>{
+ const h=createHarness();prepare(h);const i=h.state.imuLab.imu;i.pose.sideDeg=18;
+ const base=await h.start(),browser=await pw.chromium.launch({executablePath:process.env.SJKS_CHROMIUM_BINARY,headless:true,args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+ const errors=[],csp=[];let token=100;
+ try{
+  const page=await browser.newPage({viewport:{width:1280,height:1000}});
+  page.on('pageerror',error=>errors.push(error.message));page.on('console',m=>{if(m.type()==='error'&&/Content Security Policy|Refused to/.test(m.text()))csp.push(m.text());});
+  await page.goto(base);await page.fill('#authUser','admin');await page.fill('#authPass','admin123');await page.click('#loginSubmit');
+  await page.waitForFunction(()=>document.querySelector('[data-rp-live]')?.textContent==='Live position');
+  assert.equal(await page.locator('[data-rp-side]').innerText(),'18°');assert.equal(await page.locator('[data-rp-forward]').innerText(),'24°');
+  assert.equal(h.state.requests.filter(r=>r.method==='POST'&&!r.path.endsWith('/login')).length,0,'opening the overview must not start captures or send messages');
+  await page.locator('[data-rp-adjust]').click();
+  await page.evaluate(()=>window.riderCanvasBefore=document.querySelector('[data-rp-canvas]'));
+  await page.waitForTimeout(1200);
+  assert(await page.evaluate(()=>window.riderCanvasBefore===document.querySelector('[data-rp-canvas]')),'overview polling preserves the WebGL canvas');
+  assert(await page.locator('#rpCalibrationSteps').isVisible(),'overview refresh preserves an open wizard');
+  await page.route('**/api/v1/rider/calibration',async route=>{
+   assert.equal(route.request().method(),'POST');assert(route.request().headers()['x-csrf-token']);
+   const body=route.request().postDataJSON();assert.deepEqual(Object.keys(body),['action']);assert(['upright','forward','neutral','gyro'].includes(body.action));
+   i.command={token:++token,state:2,result:0};
+   await route.fulfill({status:202,contentType:'application/json',body:JSON.stringify({token,state:'queued'})});
+  });
+  await page.locator('[data-rp-capture]').click();await page.waitForTimeout(350);
+  assert.equal(await page.locator('[data-rp-step-count]').innerText(),'STEP 1 OF 3','ACK with the earlier saved result cannot complete a new capture');
+  i.calibration.result=1;i.calibration.samples=120;
+  await page.waitForFunction(()=>document.querySelector('[data-rp-message]').textContent.includes('Reading your position'));
+  i.calibration.result=2;i.calibration.revision++;
+  await page.waitForFunction(()=>document.querySelector('[data-rp-step-count]').textContent==='STEP 2 OF 3');
+  await page.locator('[data-rp-capture]').click();Object.assign(i.calibration,{operation:4,result:1,samples:100});
+  await page.waitForFunction(()=>document.querySelector('[data-rp-message]').textContent.includes('Reading your position'));
+  i.calibration.result=3;
+  await page.waitForFunction(()=>document.querySelector('[data-rp-message]').textContent.includes('You moved'));
+  assert.equal(await page.locator('[data-rp-step-count]').innerText(),'STEP 2 OF 3');
+  await page.locator('[data-rp-capture]').click();Object.assign(i.calibration,{operation:4,result:1,samples:200});
+  await page.waitForFunction(()=>document.querySelector('[data-rp-message]').textContent.includes('Reading your position'));
+  i.calibration.result=2;i.calibration.revision++;
+  await page.waitForFunction(()=>document.querySelector('[data-rp-step-count]').textContent==='STEP 3 OF 3');
+  await page.locator('[data-rp-capture]').click();Object.assign(i.calibration,{operation:5,result:1,samples:210});
+  await page.waitForFunction(()=>document.querySelector('[data-rp-message]').textContent.includes('Reading your position'));
+  i.calibration.result=2;i.calibration.revision++;
+  await page.waitForFunction(()=>document.querySelector('[data-rp-message]').textContent.includes('All three positions are saved'));
+  await page.waitForTimeout(250);assert(await page.locator('[data-rp-capture]').isDisabled());
+  for(const width of [320,390,768,1440]){
+   await page.setViewportSize({width,height:1000});await page.waitForTimeout(120);
+   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`no overflow at ${width}px`);
+   if(process.env.SJKS_MAIN_PREVIEW&&[390,1440].includes(width)){fs.mkdirSync(process.env.SJKS_MAIN_PREVIEW,{recursive:true});await page.screenshot({path:path.join(process.env.SJKS_MAIN_PREVIEW,`rider-position-${width}.png`),fullPage:true});}
+  }
+  await page.locator('[data-rp-cancel]').click();
+  await page.evaluate(()=>{document.getElementById('riderPosition').style.marginTop='2000px';scrollTo(0,0);});
+  await page.waitForTimeout(200);
+  const offscreenCalls=h.state.requests.filter(r=>r.path.endsWith('/rider/pose')).length;
+  await page.waitForTimeout(1050);
+  assert(h.state.requests.filter(r=>r.path.endsWith('/rider/pose')).length-offscreenCalls<=2,'offscreen scenes reduce pose requests');
+  await page.evaluate(()=>document.querySelector('[data-rp-adjust]').click());
+  await page.waitForTimeout(150);const setupCalls=h.state.requests.filter(r=>r.path.endsWith('/rider/pose')).length;
+  await page.waitForTimeout(800);
+  assert(h.state.requests.filter(r=>r.path.endsWith('/rider/pose')).length-setupCalls>=5,'an open setup keeps readings fresh even when its studio is offscreen');
+  await page.evaluate(()=>{document.querySelector('[data-rp-cancel]').click();document.getElementById('riderPosition').style.marginTop='';scrollTo(0,0);});
+  await page.waitForFunction(()=>document.querySelector('[data-rp-live]').textContent==='Live position');
+  h.state.freezePoseSequence=true;await page.waitForTimeout(2400);
+  assert.equal(await page.locator('[data-rp-live]').innerText(),'View paused');assert.equal(await page.locator('[data-rp-side]').innerText(),'—','duplicate packets cannot keep live readings fresh');
+  h.state.freezePoseSequence=false;i.boot++;i.pose.sideDeg=-42;i.pose.forwardDeg=-12;
+  await page.waitForFunction(()=>document.querySelector('[data-rp-side]')?.textContent==='42°');
+  assert.equal(await page.locator('[data-rp-side-direction]').innerText(),'To your left');
+  i.detector.state=4;await page.waitForFunction(()=>document.querySelector('[data-rp-condition-title]').textContent==='Crash-like motion detected');
+  h.state.poseAgeMs=500;await page.waitForFunction(()=>document.querySelector('[data-rp-live]').textContent==='View paused');assert.equal(await page.locator('[data-rp-forward]').innerText(),'—');
+  h.state.poseAgeMs=0;i.detector.state=2;
+  await page.waitForFunction(()=>document.querySelector('[data-rp-live]').textContent==='Live position');
+  h.state.poseDelayMs=900;
+  await page.waitForTimeout(2400);
+  assert.notEqual(await page.locator('[data-rp-live]').innerText(),'Live position','a delayed HTTP response cannot make an old position live');
+  assert(await page.locator('[data-rp-gyro]').isDisabled(),'stale replies cannot enable a new capture');
+  h.state.poseDelayMs=0;
+  await page.waitForFunction(()=>document.querySelector('[data-rp-live]').textContent==='Live position');
+  i.pose.forwardDeg=65;
+  await page.waitForFunction(()=>document.querySelector('[data-rp-estimate]').textContent.includes('At extreme angles'));
+  i.pose.forwardDeg=0;
+  await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));});
+  await page.waitForTimeout(150);const hiddenCalls=h.state.requests.filter(r=>r.path.endsWith('/rider/pose')).length;
+  await page.waitForTimeout(350);assert.equal(h.state.requests.filter(r=>r.path.endsWith('/rider/pose')).length,hiddenCalls,'hidden views stop pose requests');
+  await page.evaluate(()=>{delete document.hidden;document.dispatchEvent(new Event('visibilitychange'));});
+  await page.waitForFunction(()=>document.querySelector('[data-rp-live]').textContent==='Live position');
+  await page.evaluate(()=>window.dispatchEvent(new Event('vestsignout')));await page.waitForTimeout(150);
+  const stoppedCalls=h.state.requests.filter(r=>r.path.endsWith('/rider/pose')).length;
+  await page.waitForTimeout(350);assert.equal(h.state.requests.filter(r=>r.path.endsWith('/rider/pose')).length,stoppedCalls,'signout tears down the pose reader');
+  const admin=await browser.newPage({viewport:{width:1280,height:1000}});admin.on('pageerror',error=>errors.push(error.message));
+  await admin.goto(base+'/admin/sensing');await admin.fill('#authUser','developer');await admin.fill('#authPass','developer-test-password');await admin.click('#loginSubmit');
+  await admin.locator('#riderPosition').waitFor();assert.equal(await admin.locator('#riderPosition').count(),1);
+  assert.equal(await admin.locator('#imuPose,#calUpright,#calForward,#calNeutral,#calGyro').count(),0,'obsolete visualization and calibration controls are removed');
+  assert.deepEqual(errors,[]);assert.deepEqual(csp,[]);
+  console.log('PASS shared 3D rider view: sign/angles; stable canvas; no automatic writes; capture ACK versus saved revision; rejected reading retry; all three setup steps; mobile widths; offscreen optimization with active setup freshness; duplicate/stale/delayed reply pause; reboot pose reset; crash status; extreme-angle guidance; hidden/signout teardown; matching admin replacement; no JS/CSP errors');
+ }finally{await browser.close();await h.close();}
+})().catch(error=>{console.error(error);process.exitCode=1;});

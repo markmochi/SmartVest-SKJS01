@@ -1,0 +1,162 @@
+#pragma once
+
+#include <Arduino.h>
+
+#if defined(ARDUINO_ARCH_ESP32) && !defined(CONFIG_IDF_TARGET_ESP32)
+#error "This pin profile targets classic ESP32-WROOM-32, not ESP32-S2/S3/C3."
+#endif
+#if defined(BOARD_HAS_PSRAM)
+#error "This WROOM-32 profile uses GPIO16/17 for GSM. Select PSRAM Disabled."
+#endif
+
+namespace Config {
+
+constexpr char PRODUCT_NAME[] = "SmartVest SJKS-01";
+
+constexpr bool ENABLE_SIM800L = true;
+constexpr bool ENABLE_NEO6M = true;
+constexpr bool ENABLE_SENSOR_LINK = true;
+// Paired boards must agree before Sensing can arm; packet type 5 remains wire-compatible.
+#ifndef SV_ARM_CRASH_DETECTION
+#define SV_ARM_CRASH_DETECTION 1
+#endif
+constexpr bool ARM_CRASH_DETECTION = SV_ARM_CRASH_DETECTION;
+constexpr bool ENABLE_BENCH_TESTS =
+    true;  // Developer-only diagnostic APIs; manual system tests use labelled messages.
+constexpr bool ENABLE_USB_DEBUG = true; // Serial Monitor: 9600 baud with the default GPS speed.
+constexpr uint32_t SENSOR_BAUD = 115200;
+constexpr uint32_t SENSOR_OFFLINE_MS = 3500;
+constexpr uint32_t GPS_LAST_LOCATION_MAX_MS = 5UL * 60UL * 1000UL;
+constexpr uint32_t CAMERA_COMMAND_DEADLINE_MS = 7UL * 60UL * 1000UL;
+constexpr uint16_t CAMERA_PRE_CLIPS = 5;
+constexpr uint16_t CAMERA_POST_CLIPS = 5;
+constexpr uint16_t CAMERA_NORMAL_CLIPS = 30;
+constexpr uint16_t CAMERA_SEGMENT_SECONDS = 60;
+constexpr float LOW_BATTERY_V =
+    10.8f;  // Voltage warning only; battery chemistry must be verified.
+
+constexpr bool USE_HOME_WIFI = false; // true: home Wi-Fi. false: vest hotspot.
+constexpr char HOME_WIFI_SSID[] = "";
+constexpr char HOME_WIFI_PASSWORD[] = "";
+
+constexpr char WIFI_NAME[] = "@AP_NAME@";
+constexpr char WIFI_PASSWORD[] = "@AP_PASSWORD@";
+constexpr char LOCAL_HOSTNAME[] = "smartvest";
+constexpr bool ENABLE_MDNS = true;
+constexpr bool ENABLE_CAPTIVE_PORTAL = true; // Used only with the vest hotspot.
+// Default: phone's "Sign in to Wi-Fi" opens the dashboard directly.
+// Set to 1 only for HTTP-check compatibility without a captive sign-in popup.
+#ifndef SV_HOTSPOT_LOCAL_DEVICE_MODE
+#define SV_HOTSPOT_LOCAL_DEVICE_MODE 0
+#endif
+constexpr bool HOTSPOT_LOCAL_DEVICE_MODE = SV_HOTSPOT_LOCAL_DEVICE_MODE;
+constexpr uint8_t WIFI_CHANNEL = 6;
+constexpr uint8_t MAX_WIFI_USERS = 6;
+// Conservative phone/PC interoperability. SD video recording is independent
+// of the AP link. Enable 11n only after physical reconnect/soak validation.
+constexpr bool WIFI_AP_ALLOW_11N = false;
+
+constexpr char DEFAULT_RIDER_USERNAME[] = "admin";
+constexpr char DEFAULT_RIDER_PASSWORD[] = "@RIDER_PASSWORD@";
+constexpr char DEVELOPER_USERNAME[] = "developer";
+constexpr char DEVELOPER_PASSWORD[] = "@DEVELOPER_PASSWORD@"; // Set your own for home mode.
+constexpr char LEGACY_DEFAULT_PASSWORD[] = "@RIDER_PASSWORD@";
+constexpr bool ALLOW_DEFAULT_RIDER_LOGIN = true;
+constexpr uint32_t RIDER_ACCOUNT_RESET_REVISION = 1; // Increase once to restore rider login; keeps contacts/history.
+constexpr size_t RIDER_MIN_PASSWORD_LENGTH = 8;
+
+constexpr bool BATTERY_MONITORS_PACK = true;
+constexpr uint8_t BATTERY_LOW_PERCENT = 30;
+constexpr uint8_t BATTERY_CRITICAL_PERCENT = 10;
+constexpr uint32_t BATTERY_SAMPLE_STALE_MS = 6000;
+
+constexpr bool ENABLE_BATTERY_LED = true;
+constexpr bool LED_COMMON_ANODE = false;
+constexpr uint32_t BATTERY_CRITICAL_BLINK_MS = 250;
+constexpr uint32_t BATTERY_CHARGING_BLINK_MS = 500;
+// Optional six-second boot demonstration; always false for normal operation.
+constexpr bool BATTERY_LED_BOOT_TEST = false;
+
+constexpr char SMS_INVITATION_TEXT[] =
+    "'s SmartVest!\nThey added you as an emergency contact. "
+    "Please save this number as SmartVest for future alerts.";
+
+constexpr char SMS_ALERT_HEADER[] = "SmartVest CRASH ALERT";
+constexpr char SMS_ALERT_ACTION[] = "Call their phone now. No answer? Call 911.";
+constexpr char SMS_TEST_HEADER[] = "SmartVest test";
+constexpr char SMS_TEST_TEXT[] = "This is a test. No action needed.";
+constexpr char SMS_FRESH_LOCATION_LABEL[] = "Location:";
+constexpr char SMS_STALE_LOCATION_LABEL[] = "Last known location:";
+constexpr char SMS_NO_GPS_TEXT[] = "Location unavailable.";
+constexpr size_t SMS_MAX_LENGTH = 160;
+
+constexpr int SIM800L_RX_PIN = 16;  // RX2: ESP32 RX <- SIM800L TXD
+constexpr int SIM800L_TX_PIN = 17;  // TX2: ESP32 TX -> SIM800L RXD
+
+constexpr int NEO6M_RX_PIN = 4;  // ESP32 RX <- NEO-6M TX
+constexpr int NEO6M_TX_PIN = 5;  // Reserved only; GPS RX stays unconnected.
+
+constexpr int I2C_SDA_PIN = 21;
+constexpr int I2C_SCL_PIN = 22;
+
+constexpr int SENSOR_RX_PIN = 26;  // Main RX <- SENSING GPIO17 (TX), UART0 remapped.
+constexpr int SENSOR_TX_PIN = 27;  // Main TX -> SENSING GPIO16 (RX), ACK return.
+
+constexpr int LED_RED_PIN = 23;
+constexpr int LED_GREEN_PIN = 18;
+constexpr int LED_BLUE_PIN = 19;
+
+constexpr uint32_t DEBUG_BAUD = 9600;
+constexpr int DEBUG_TX_PIN = 1; // USB bridge RX on ESP32-WROOM development boards.
+constexpr uint32_t NEO6M_BAUD = 9600;
+constexpr bool NEO6M_AUTO_BAUD = false;
+
+constexpr uint32_t WIFI_CONNECT_TIMEOUT_MS = 20000;
+constexpr uint32_t WIFI_RETRY_INITIAL_MS = 5000;
+constexpr uint32_t WIFI_RETRY_MAX_MS = 60000;
+constexpr uint32_t WIFI_MDNS_RETRY_MS = 30000;
+constexpr uint32_t NEO6M_FRESH_MS = 10000;
+
+constexpr uint32_t SIM800L_STATUS_STALE_MS = 30000;
+constexpr uint32_t SIM800L_SIM_POLL_MS = 3000;
+constexpr uint32_t SIM800L_SIM_STALE_MS = 15000;
+constexpr uint32_t SIM800L_REGISTRATION_STALE_MS = 20000;
+constexpr uint32_t SIM800L_SIGNAL_STALE_MS = 20000;
+constexpr uint32_t SIM800L_IDENTITY_RECHECK_MS = 30000;
+constexpr uint32_t SIM800L_POLL_INTERVAL_MS = 1000;
+constexpr uint8_t SIM800L_MAX_MISSED_POLLS = 6;
+constexpr uint32_t SIM800L_RECOVERY_CHECK_MS = 60000;
+constexpr uint32_t SIM800L_SYNC_QUIET_MS = 500;
+constexpr uint32_t SIM800L_REACQUIRE_BACKOFF_MS = 5000;
+constexpr uint8_t SIM800L_SYNC_ATTEMPTS = 3;
+constexpr uint32_t SMS_HISTORY_FLUSH_MS = 1000;
+constexpr uint32_t SMS_REPORT_PDU_TIMEOUT_MS = 2000;
+constexpr uint32_t SMS_RESULT_RECOVERY_QUIET_MS = 10000;
+
+constexpr uint32_t SMS_PROMPT_TIMEOUT_MS = 65000;
+constexpr uint32_t SMS_RESULT_TIMEOUT_MS = 70000;
+constexpr uint32_t SMS_NETWORK_RECHECK_MS = 2500;
+constexpr uint32_t SMS_MODEM_SETTLE_MS = 1000;
+constexpr uint32_t SMS_FAILURE_SETTLE_MS = 2500;
+constexpr uint32_t SMS_MIN_GAP_MS = 1000;
+constexpr uint32_t SMS_RETRY_DELAY_MS = 20000;
+constexpr uint32_t MANUAL_SMS_COOLDOWN_MS = 15000;
+constexpr uint32_t LOGIN_THROTTLE_MS = 60000;
+constexpr uint32_t SESSION_TIMEOUT_MS = 30UL * 60UL * 1000UL;
+constexpr uint32_t SMS_JOB_TTL_MS = 15UL * 60UL * 1000UL;
+// Cameras normally report every 5 s. After 7 s without a heartbeat, keep the
+// link in a connected/delayed state but stop presenting SD/recording data as
+// current. A later 15 s timeout marks the camera fully offline.
+constexpr uint32_t CAMERA_STATUS_FRESH_MS = 7000;
+constexpr uint32_t CAMERA_OFFLINE_MS = 15000;
+constexpr uint32_t CAMERA_FRAME_FRESH_AT_REPORT_MS = 2000;
+
+constexpr size_t MAX_CONTACTS = 5;
+constexpr size_t MAX_SMS_JOBS = 20;
+constexpr size_t MAX_SMS_ATTEMPTS = 3;
+constexpr size_t MAX_SESSIONS = 4;
+constexpr bool NETWORK_USES_AP = !USE_HOME_WIFI;
+constexpr bool NETWORK_USES_STATION = USE_HOME_WIFI;
+} // namespace Config
+
+#include "src/network/ConfigValidation.h"
